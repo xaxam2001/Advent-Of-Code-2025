@@ -21,12 +21,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "DournauxNathan"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/xaxam2001/Advent-Of-Code-2025.git",
+    "accountId": "e6f6dc37-3ec1-4d4e-9f6c-7f736284a592"
+  }
+}]]></component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="nNbBGupD" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="391GoziVgDSTfI0VLqyEBlCwjTw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,15 +46,25 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cargo.Run Advent-Of-Code-2025.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "main",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "Nathan",
+    "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Users/maxim/Documents/Classes/Rust/Advent-Of-Code-2025",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "org.rust.first.attach.projects": "true",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -93,6 +115,7 @@
       <option name="presentableId" value="Default" />
       <updated>1769856341381</updated>
       <workItem from="1769856342446" duration="27000" />
+      <workItem from="1771860766223" duration="3616000" />
     </task>
     <servers />
   </component>
