@@ -7,16 +7,22 @@ fn main() {
 
     let rotations = contents.split_whitespace();
 
+    //let rotations = ["L68", "L30","R48","L5","R60", "L55", "L1", "L99", "R14","L82"];
+
     for rotation in  rotations {
         let (dir, rot) = rotation.split_at(1);
         let rot: i32 = rot.parse().unwrap_or(0);
 
-        if dir == "L" {
-            position = (position - rot).rem_euclid(100);
-        } else {
-            position = (position + rot).rem_euclid(100);
+        for _ in 0..rot {
+            if dir == "L" {
+                position = (position - 1).rem_euclid(100);
+
+            } else {
+                position = (position + 1).rem_euclid(100);
+            }
+
+            if position == 0 { result += 1 }
         }
-        if position == 0 { result += 1 }
     }
 
     println!("{}", result);
