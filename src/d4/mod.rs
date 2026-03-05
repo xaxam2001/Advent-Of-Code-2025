@@ -1,7 +1,5 @@
 use std::time::Duration;
 
-
-
 pub fn d4p1_v1(s: &str) -> usize {
     std::thread::sleep(Duration::from_millis(40));
 

@@ -1,5 +1,4 @@
 use std::time::Duration;
-use std::str::FromStr;
 
 pub fn d3p1_v1(s: &str) -> usize {
     std::thread::sleep(Duration::from_millis(40));
@@ -25,7 +24,7 @@ pub fn d3p1_v1(s: &str) -> usize {
             {
                 let valeur_unite = numbers[j];
 
-                let mut joltage_combine:i32 = valeur_dizaine * 10 + valeur_unite;
+                let joltage_combine:i32 = valeur_dizaine * 10 + valeur_unite;
 
                 if joltage_combine > max_banque
                 {
@@ -40,7 +39,7 @@ pub fn d3p1_v1(s: &str) -> usize {
     somme_total.try_into().unwrap()
 }
 
-pub fn d3p2_v1(s: &str) -> usize {
+pub fn d3p2_v1(_s: &str) -> usize {
     std::thread::sleep(Duration::from_millis(40));
 
    0
