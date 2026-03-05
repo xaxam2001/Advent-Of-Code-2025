@@ -3,4 +3,11 @@ name = "Advent-Of-Code-2025"
 version = "0.1.0"
 edition = "2024"
 
+[[bench]]
+name = "bench_d1"
+path = "src/bench_d1.rs"
+harness = false
+
 [dependencies]
+criterion = "0.8.2"
+gnuplot = "0.0.46"

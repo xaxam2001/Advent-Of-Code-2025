@@ -1,41 +1,34 @@
-use std::fs;
+use crate::d1::{d1p1, d1p2};
+use crate::d2::{d2p1};
+mod d1;
+mod d2;
+mod bench_d2;
 
 fn main() {
-    let mut result: i32 = 0;
-    let mut position:i32 = 50;
-    let contents = fs::read_to_string(r"F:\Projets\Advent-Of-Code-2025\src\d1\input.txt").expect("Something went wrong reading the file");
-
-    let rotations = contents.split_whitespace();
-
-    //let rotations = ["L68", "L30","R48","L5","R60", "L55", "L1", "L99", "R14","L82"];
-
-    for rotation in  rotations {
-        let (dir, rot) = rotation.split_at(1);
-        let rot: i32 = rot.parse().unwrap_or(0);
-
-        for _ in 0..rot {
-            if dir == "L" {
-                position = (position - 1).rem_euclid(100);
-
-            } else {
-                position = (position + 1).rem_euclid(100);
-            }
-
-            if position == 0 { result += 1 }
-        }
-    }
-
-    println!("{}", result);
+    println!("--- Day 1 ---");
+    println!("Résultat Partie 1 : {}", d1p1(include_str!("d1/d1.txt")));
+    println!("Résultat Partie 2 : {}", d1p2(include_str!("d1/d1.txt")));
+    println!("-------------\n");
+    println!("--- Day 2 ---");
+    println!("Résultat Partie 1 : {}", d2p1(include_str!("d2/d2p1_test.txt")));
+    println!("-------------\n");
+    println!("--- Day 3 --- ");
+    println!("-------------\n");
+    println!("--- Day 4 --- ");
+    println!("-------------\n");
+    println!("--- Day 5 --- ");
+    println!("-------------\n");
+    println!("--- Day 6 ---");
+    println!("-------------\n");
+    println!("--- Day 7 ---");
+    println!("-------------\n");
+    println!("--- Day 8 ---");
+    println!("-------------\n");
+    println!("--- Day 9 ---");
+    println!("-------------\n");
+    println!("--- Day 10 ---");
+    println!("-------------\n");
+    println!("--- Day 11 ---");
+    println!("-------------\n");
+    println!("--- Day 12 ---");
 }
-/*
-fn clamp_dial(input: i32) -> i32
-{
-    if (input > 100)
-    {
-        100 - input
-    } else if (input < 0) {
-        100 + input
-    } else {
-        0 + input
-    }
-}*/
