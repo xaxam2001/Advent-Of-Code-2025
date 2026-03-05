@@ -9,16 +9,16 @@ mod d4;
 
 fn main() {
     println!("--- Day 1 ---");
-    //println!("Résultat Partie 1 : {}", d1p1(include_str!("d1/d1.txt")));
-    //println!("Résultat Partie 2 : {}", d1p2(include_str!("d1/d1.txt")));
+    println!("Résultat Partie 1 : {}", d1p1(include_str!("d1/d1.txt")));
+    println!("Résultat Partie 2 : {}", d1p2(include_str!("d1/d1.txt")));
     println!("-------------\n");
     println!("--- Day 2 ---");
-    //println!("Résultat Partie 1 : {}", d2p1(include_str!("d2/d2.txt")));
-    //println!("Résultat Partie 2 : {}", d2p2(include_str!("d2/d2.txt")));
+    println!("Résultat Partie 1 : {}", d2p1(include_str!("d2/d2.txt")));
+    println!("Résultat Partie 2 : {}", d2p2(include_str!("d2/d2.txt")));
     println!("-------------\n");
     println!("--- Day 3 --- ");
-    //println!("Résultat Partie 1 : {}", d3p1(include_str!("d3/d3.txt")));
-    //println!("Résultat Partie 2 : {}", d3p2(include_str!("d3/d3.txt")));
+    println!("Résultat Partie 1 : {}", d3p1(include_str!("d3/d3.txt")));
+    println!("Résultat Partie 2 : {}", d3p2(include_str!("d3/d3.txt")));
     println!("-------------\n");
     println!("--- Day 4 --- ");
     println!("Résultat Partie 1 : {}", d4p1(include_str!("d4/d4.txt")));

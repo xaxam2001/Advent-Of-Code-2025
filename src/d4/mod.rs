@@ -53,7 +53,65 @@ pub fn d4p1_v1(s: &str) -> usize {
 pub fn d4p2_v1(s: &str) -> usize {
     std::thread::sleep(Duration::from_millis(40));
 
-    0
+    let mut deleted = 0;
+    let mut modified = true;
+
+    let directions = [
+        (-1,-1), (-1,0), (-1,1),
+        (0,-1),          (0,1),
+        (1,-1),  (1,0),  (1,1),
+    ];
+
+    let mut grid: Vec<Vec<char>> = s.lines().map(|line| line.chars().collect()).collect();
+
+    let mut deleted_pos: Vec<(usize, usize)> = Vec::new();
+
+    while modified {
+        modified = false;
+
+        for y in 0..grid.len() {
+            for x in 0..grid[y].len() {
+                let cell = grid[y][x];
+
+                if cell == '@'
+                {
+                    let mut voisins = 0;
+
+                    for (dx, dy) in directions {
+
+                        let nx = x as i32 + dx;
+                        let ny = y as i32 + dy;
+
+                        // vérification des limites
+                        if nx >= 0 && ny >= 0 &&
+                            (nx as usize) < grid[y].len() &&
+                            (ny as usize) < grid.len() {
+
+                            if grid[ny as usize][nx as usize] == '@' {
+                                voisins += 1;
+                            }
+                        }
+                    }
+
+                    if voisins < 4 {
+                        deleted_pos.push((x, y));
+                        modified = true;
+                    }
+                }
+                else { continue }
+            }
+        }
+
+        for (px, py) in &deleted_pos {
+            // Vous accédez maintenant directement à px et py
+            if grid[*py][*px] == '@' {
+                grid[*py][*px] = '.';
+                deleted += 1;
+            }
+        }
+    }
+
+    deleted
 }
 
 pub fn d4p1(s: &str) -> usize {
