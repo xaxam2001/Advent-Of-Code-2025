@@ -1,5 +1,5 @@
 use crate::d1::{d1p1, d1p2};
-use crate::d2::{d2p1};
+use crate::d2::{d2p1, d2p2};
 mod d1;
 mod d2;
 mod bench_d2;
@@ -10,7 +10,8 @@ fn main() {
     println!("Résultat Partie 2 : {}", d1p2(include_str!("d1/d1.txt")));
     println!("-------------\n");
     println!("--- Day 2 ---");
-    println!("Résultat Partie 1 : {}", d2p1(include_str!("d2/d2p1_test.txt")));
+    println!("Résultat Partie 1 : {}", d2p1(include_str!("d2/d2.txt")));
+    println!("Résultat Partie 2 : {}", d2p2(include_str!("d2/d2.txt")));
     println!("-------------\n");
     println!("--- Day 3 --- ");
     println!("-------------\n");

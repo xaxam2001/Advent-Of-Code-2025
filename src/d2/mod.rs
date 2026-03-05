@@ -2,36 +2,90 @@ use std::time::Duration;
 
 pub fn d2p1_v1(s: &str) -> usize {
     std::thread::sleep(Duration::from_millis(40));
+    let mut result = 0;
+    let product_ids:Vec<&str> = s.split(',').collect();
 
-    let ranges:Vec<&str> = s.split(',').collect();
-    let result:usize = 0;
+    for product_id in &product_ids
+    {
+        let ids:Vec<&str> = product_id.split('-').collect();
+        let a = ids[0].parse::<usize>().unwrap();
+        let b = ids[1].parse::<usize>().unwrap();
 
-    for range in ranges{
-        if !range.chars().all(|c| c.is_ascii_digit()) { continue }
-
-        let longueur = range.len();
-        let mut is_repeated:bool = false;
-
-        if longueur % 2 && longueur > 0
+        for range in a..=b
         {
-            let middle = longueur / 2;
-            let partie_A = &range[0..middle];
-            let partie_B = &range[middle.. longueur-1];
+            let id_str = &range.to_string();
+            let length = id_str.len();
 
-            if partie_A == partie_A { is_repeated = true; }
+
+            if !length % 2 == 0 {
+                continue;
+            }
+            else if length % 2 == 0 && length > 0
+            {
+                let middle = length / 2;
+                let a = &id_str[..middle];
+                let b = &id_str[middle..length];
+
+                if a == b {
+                    result += range;
+                }
+            }
         }
     }
 
-    s.len()
+    result
+}
+
+pub fn d2p2_v1(s: &str) -> usize {
+    std::thread::sleep(Duration::from_millis(40));
+    let mut result = 0;
+    let product_ids:Vec<&str> = s.split(',').collect();
+
+    for product_id in &product_ids
+    {
+        let ids:Vec<&str> = product_id.split('-').collect();
+        let a = ids[0].parse::<usize>().unwrap();
+        let b = ids[1].parse::<usize>().unwrap();
+
+        for range in a..=b
+        {
+            let id_str = &range.to_string();
+            let chars:Vec<char> = range.to_string().chars().collect();
+            let length = chars.len();
+
+            let middle = length / 2;
+
+            for i in 1..=middle
+            {
+                if length % i != 0 && length > 0 { continue; }
+
+                let seq = &id_str[0..i];
+
+                let rep = &seq.repeat(length / i);
+
+                if id_str == rep
+                {
+                    result += range;
+                    break;
+                }
+            }
+        }
+    }
+
+    result
 }
 
 pub fn d2p1(s: &str) -> usize {
     d2p1_v1(s)
 }
 
+pub fn d2p2(s: &str) -> usize {
+    d2p2_v1(s)
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::d2::d2p1;
+    use crate::d2::{d2p1, d2p2};
 
     #[test]
     fn d2p1_test()
@@ -39,5 +93,13 @@ mod tests {
         let s = include_str!("d2p1_test.txt");
         let result:usize = d2p1(s);
         println!("P1 : {}", result);
+    }
+
+    #[test]
+    fn d2p2_test()
+    {
+        let s = include_str!("d2p1_test.txt");
+        let result:usize = d2p2(s);
+        println!("P2 : {}", result);
     }
 }
