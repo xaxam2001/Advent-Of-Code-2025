@@ -42,7 +42,8 @@ pub fn d3p1_v1(s: &str) -> usize {
 
 pub fn d3p2_v1(s: &str) -> usize {
     std::thread::sleep(Duration::from_millis(40));
-    0
+
+   0
 }
 
 pub fn d3p1(s: &str) -> usize {
