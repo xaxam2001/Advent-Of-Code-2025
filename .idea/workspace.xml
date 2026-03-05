@@ -63,6 +63,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cargo.Install cargo-expand.executor": "Run",
     "Cargo.Run Advent-Of-Code-2025.executor": "Run",
     "Cargo.Test d1::tests.executor": "Run",
     "Cargo.Test d1::tests::d1p1_test.executor": "Run",
@@ -71,6 +72,7 @@
     "Cargo.Test d2::tests.executor": "Run",
     "Cargo.Test d2::tests::d2p1_test.executor": "Run",
     "Cargo.Test d2::tests::d2p2_test.executor": "Run",
+    "Cargo.Test d3.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -116,24 +118,6 @@
     </configuration>
     <configuration name="Test Advent-Of-Code-2025" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="test --workspace" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test d1::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="buildProfileId" value="test" />
-      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d1::tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -220,13 +204,31 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test d3" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="buildProfileId" value="test" />
+      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d3" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test d3" />
         <item itemvalue="Cargo.Test d2::tests" />
         <item itemvalue="Cargo.Test d2" />
         <item itemvalue="Cargo.Test d2::tests::d2p2_test" />
         <item itemvalue="Cargo.Test d2::tests::d2p1_test" />
-        <item itemvalue="Cargo.Test d1::tests" />
       </list>
     </recent_temporary>
   </component>
@@ -248,7 +250,7 @@
       <workItem from="1771928342869" duration="1171000" />
       <workItem from="1771929575050" duration="5358000" />
       <workItem from="1772182335231" duration="1314000" />
-      <workItem from="1772698665919" duration="9211000" />
+      <workItem from="1772698665919" duration="17519000" />
     </task>
     <servers />
   </component>

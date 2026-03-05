@@ -8,6 +8,17 @@ name = "bench_d1"
 path = "src/bench_d1.rs"
 harness = false
 
+[[bench]]
+name = "bench_d2"
+path = "src/bench_d2.rs"
+harness = false
+
+
+[[bench]]
+name = "bench_d3"
+path = "src/bench_d3.rs"
+harness = false
+
 [dependencies]
 criterion = "0.8.2"
 gnuplot = "0.0.46"
