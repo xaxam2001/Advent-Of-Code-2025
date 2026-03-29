@@ -12,9 +12,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="194c2d95-4ed6-4ccc-b7fc-69d458b3e9ab" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/bench_d5.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bench_d6.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/d6/d6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/d6/d6_test.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/d6/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d2.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d2.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d3.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d3.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d4.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d4.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d5/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d5/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +70,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/maxim/Documents/Classes/Rust/Advent-Of-Code-2025/src",
+    "last_opened_file_path": "C:/Users/maxim/Documents/Cours/ESGI 4A/Rust/Advent-Of-Code-2025/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,6 +82,9 @@
     "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Classes/Rust/Advent-Of-Code-2025/src/bench_d2.rs": "true",
     "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Classes/Rust/Advent-Of-Code-2025/src/bench_d3.rs": "true",
     "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Classes/Rust/Advent-Of-Code-2025/src/bench_d4.rs": "true",
+    "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Classes/Rust/Advent-Of-Code-2025/src/bench_d5.rs": "true",
+    "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Cours/ESGI 4A/Rust/Advent-Of-Code-2025/src/bench_d6.rs": "true",
+    "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Cours/ESGI 4A/Rust/Advent-Of-Code-2025/src/d6/mod.rs": "true",
     "org.rust.first.attach.projects": "true",
     "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
@@ -81,6 +92,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\maxim\Documents\Cours\ESGI 4A\Rust\Advent-Of-Code-2025\src" />
       <recent name="C:\Users\maxim\Documents\Classes\Rust\Advent-Of-Code-2025\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -205,7 +217,10 @@
       <workItem from="1771863995649" duration="17810000" />
       <workItem from="1771930321169" duration="3295000" />
       <workItem from="1772110638706" duration="13474000" />
-      <workItem from="1772478183478" duration="9820000" />
+      <workItem from="1772478183478" duration="10576000" />
+      <workItem from="1772885938428" duration="6994000" />
+      <workItem from="1774547642888" duration="299000" />
+      <workItem from="1774774691846" duration="4533000" />
     </task>
     <servers />
   </component>

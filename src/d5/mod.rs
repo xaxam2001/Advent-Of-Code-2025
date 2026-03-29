@@ -13,7 +13,7 @@ pub fn d5p1_v1(s: &str) -> usize {
     let mut valid_id = HashSet::<usize>::new();
 
     for line in s.lines() {
-        if line == "" {
+        if line.is_empty() {
             range_browsed = true;
             continue;
         }
@@ -24,7 +24,6 @@ pub fn d5p1_v1(s: &str) -> usize {
             for index in 0..lower_bounds.len() {
                 if id >= lower_bounds[index] && id <= higher_bounds[index] {
                     valid_id.insert(id);
-                    continue;
                 }
             }
         } else {
@@ -51,10 +50,11 @@ pub fn d5p2(s: &str) -> usize {
 }
 
 pub fn d5p2_v1(s: &str) -> usize {
+    // storing each number of each range is not possible because the numbers are way too big
     let mut ranges: Vec<(usize, usize)> = Vec::new();
 
     for line in s.lines() {
-        if line == "" {
+        if line.is_empty() { // smarter than line == ""
             break;
         }
 
@@ -76,10 +76,25 @@ pub fn d5p2_v1(s: &str) -> usize {
     merged.push(ranges[0]);
 
     for &(lower_bound, end_bound) in &ranges[1..] {
-        
+        // last range added into the list
+        let Some(last) = merged.last_mut() else {panic!("error while going through the ranges")};
+
+        // if ranges are touching each other or overlapping then we can merge them
+        // (using saturating add to avoid overflow)
+        if lower_bound <= last.1.saturating_add(1) {
+            last.1 = last.1.max(end_bound);
+        } else {
+            merged.push((lower_bound, end_bound));
+        }
     }
 
-    valid_id.len()
+    let mut valid_id = 0;
+
+    for (lower_bound, end_bound) in merged{
+        valid_id += (end_bound - lower_bound) + 1;
+    }
+
+    valid_id
 }
 
 #[cfg(test)]

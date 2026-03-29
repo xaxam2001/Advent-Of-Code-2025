@@ -4,7 +4,7 @@ mod d2;
 pub fn d2(c: &mut Criterion) {
     {
         let mut group = c.benchmark_group("d2p1");
-        group.bench_function("d2p2_v1",
+        group.bench_function("d2p1_v1",
                              |b| b.iter(|| d2::d2p1_v1(include_str!("d2/d2.txt"))));
     }
     // group.bench_function("d1p1_v2",
