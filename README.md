@@ -37,3 +37,11 @@ splitting the computation between L and R bc the R case is simpler and less cost
 
 ### v4
 optimizing the subtracting by getting rid of `rem_euclid`
+
+## d2p1
+
+### v2
+used u8 instead of str for parsing
+
+### v3
+use maths to detect if both part are equal instead of reconverting to string

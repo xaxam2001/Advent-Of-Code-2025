@@ -1,7 +1,5 @@
-pub fn d2p1(s: &str) -> usize {
-    d2p1_v1(s)
-}
 
+#[allow(unused)]
 pub fn d2p1_v1(s: &str) -> usize {
     let ranges = s.split(',');
 
@@ -33,9 +31,102 @@ pub fn d2p1_v1(s: &str) -> usize {
     total
 }
 
-pub fn d2p2(s: &str) -> usize {
-    d2p2_v1(s)
+#[allow(unused)]
+pub fn d2p1_v2(s: &str) -> usize {
+
+    let mut total = 0usize;
+
+    // using u8 representation as well here
+    for range in s.as_bytes().split(|&b| b == b',') {
+        let mut parts = range.split(|&b| b == b'-');
+
+        let Some(first_part) = parts.next() else { panic!("Invalid input no number found for first part of a range") };
+        let Some(end_part) = parts.next() else { panic!("Invalid input no number found for second part of a range") };
+
+        // Fast manual parsing from bytes to usize
+        let mut first_bound = 0usize;
+        for &b in first_part {
+            first_bound = first_bound * 10 + (b - b'0') as usize;
+        }
+
+        let mut end_bound = 0usize;
+        for &b in end_part {
+            end_bound = end_bound * 10 + (b - b'0') as usize;
+        }
+
+        for id in first_bound..=end_bound {
+            // convert the number to a String to split it
+            let id_str = id.to_string();
+            let id_bytes = id_str.as_bytes();
+
+            let len = id_bytes.len();
+
+            // odd number of digits can't be divided
+            if len % 2 != 0 { continue; }
+
+            let mid = len / 2;
+
+            // getting each half and comparing
+            let left_half = &id_bytes[..mid];
+            let right_half = &id_bytes[mid..];
+
+            if left_half == right_half {
+                total += id;
+            }
+        }
+    }
+
+    total
 }
+
+#[allow(unused)]
+pub fn d2p1_v3(s: &str) -> usize {
+
+    let mut total = 0usize;
+
+    // using u8 representation as well here
+    for range in s.as_bytes().split(|&b| b == b',') {
+        let mut parts = range.split(|&b| b == b'-');
+
+        let Some(first_part) = parts.next() else { panic!("Invalid input no number found for first part of a range") };
+        let Some(end_part) = parts.next() else { panic!("Invalid input no number found for second part of a range") };
+
+        // Fast manual parsing from bytes to usize
+        let mut first_bound = 0usize;
+        for &b in first_part {
+            first_bound = first_bound * 10 + (b - b'0') as usize;
+        }
+
+        let mut end_bound = 0usize;
+        for &b in end_part {
+            end_bound = end_bound * 10 + (b - b'0') as usize;
+        }
+
+        for id in first_bound..=end_bound {
+            if id == 0 { continue; }
+
+            // .ilog10() is an instruction to find the number of digits - 1
+            let digits = id.ilog10() + 1;
+
+            if digits % 2 != 0 { continue; } // if number of digits is odd then we can't split it in half
+
+            // get the middle of the number
+            let half_digits = digits / 2;
+            let divisor = 10usize.pow(half_digits); // need to precise usize for rust to get the right pow
+
+            // I wouldn't have thought of this
+            // Split the number mathematically
+            // 1212 / 100 = 12 (Left half)
+            // 1212 % 100 = 12 (Right half)
+            if id / divisor == id % divisor {
+                total += id;
+            }
+        }
+    }
+
+    total
+}
+
 
 pub fn d2p2_v1(s: &str) -> usize {
     let ranges = s.split(',');
@@ -77,6 +168,14 @@ pub fn d2p2_v1(s: &str) -> usize {
     }
 
     total
+}
+
+pub fn d2p1(s: &str) -> usize {
+    d2p1_v3(s)
+}
+
+pub fn d2p2(s: &str) -> usize {
+    d2p2_v1(s)
 }
 
 #[cfg(test)]
