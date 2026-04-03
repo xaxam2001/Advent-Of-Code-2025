@@ -13,6 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="194c2d95-4ed6-4ccc-b7fc-69d458b3e9ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bench_d2.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d2.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/d2/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d2/mod.rs" afterDir="false" />
     </list>
@@ -59,6 +60,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/maxim/Documents/Cours/ESGI 4A/Rust/Advent-Of-Code-2025/src/d1",
@@ -77,7 +79,7 @@
     "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Cours/ESGI 4A/Rust/Advent-Of-Code-2025/src/bench_d6.rs": "true",
     "org.rust.disableDetachedFileInspectionC:/Users/maxim/Documents/Cours/ESGI 4A/Rust/Advent-Of-Code-2025/src/d6/mod.rs": "true",
     "org.rust.first.attach.projects": "true",
-    "settings.editor.selected.configurable": "terminal",
+    "settings.editor.selected.configurable": "language.rust.cargo.check",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -215,10 +217,15 @@
       <workItem from="1774774691846" duration="9826000" />
       <workItem from="1774791175045" duration="8267000" />
       <workItem from="1774883822923" duration="2892000" />
+      <workItem from="1775243523334" duration="7307000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

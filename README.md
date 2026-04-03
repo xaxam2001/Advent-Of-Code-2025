@@ -45,3 +45,17 @@ used u8 instead of str for parsing
 
 ### v3
 use maths to detect if both part are equal instead of reconverting to string
+
+## d2p2
+
+### v2
+used u8 and used math to see if part were equal
+
+### v3
+used ten power lookup table rather than computing with pow
+
+### v4
+used only prime dividers because if the id isn't composed of similar blocks when divided into 2 blocks then it wont be when divided into 4, 8 or 10 blocks so we can skip
+
+### v5
+removed the for parts loop, now we remove the first block and the last block and compare them, if there are the same then the blocks are similar
