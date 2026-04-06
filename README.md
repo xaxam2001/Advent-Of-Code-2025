@@ -59,3 +59,19 @@ used only prime dividers because if the id isn't composed of similar blocks when
 
 ### v5
 removed the for parts loop, now we remove the first block and the last block and compare them, if there are the same then the blocks are similar
+
+
+## d3p1
+
+### v2
+using iterators instead of nth
+
+### v3
+using u8 list instead of str
+
+### v4
+getting rid of the double loop, refined logic
+
+## d3p2
+
+### v2
