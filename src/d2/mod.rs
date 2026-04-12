@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 pub fn d2p1_v1(s: &str) -> usize {
-    std::thread::sleep(Duration::from_millis(40));
+    //std::thread::sleep(Duration::from_millis(40));
     let mut result = 0;
     let product_ids:Vec<&str> = s.split(',').collect();
 
@@ -15,7 +15,6 @@ pub fn d2p1_v1(s: &str) -> usize {
         {
             let id_str = &range.to_string();
             let length = id_str.len();
-
 
             if !length % 2 == 0 {
                 continue;
@@ -36,8 +35,87 @@ pub fn d2p1_v1(s: &str) -> usize {
     result
 }
 
+pub fn d2p1_v2(s: &str) -> usize {
+    let mut result = 0;
+
+    for product_id in s.split(',')
+    {
+        let ids:Vec<&str> = product_id.split('-').collect();
+        let a = ids[0].parse::<usize>().unwrap();
+        let b = ids[1].parse::<usize>().unwrap();
+
+        for range in a..=b
+        {
+            let mut temp = range;
+            let mut nombre_chiffres = 0;
+            while temp > 0 {
+                temp /= 10;
+                nombre_chiffres += 1;
+            }
+
+            if nombre_chiffres > 0 && nombre_chiffres % 2 == 0 {
+                let moitie = nombre_chiffres / 2;
+
+                let mut diviseur = 1;
+                for _ in 0..moitie {
+                    diviseur *= 10;
+                }
+
+                let gauche = range / diviseur;
+                let droite = range % diviseur;
+
+                if gauche == droite {
+                    result += range;
+                }
+            }
+        }
+    }
+
+    result
+}
+
+pub fn d2p1_v3(s: &str) -> usize {
+    let mut result = 0;
+
+    for product_id in s.split(',')
+    {
+        let ids:Vec<&str> = product_id.split('-').collect();
+        let a = ids[0].parse::<usize>().unwrap();
+        let b = ids[1].parse::<usize>().unwrap();
+
+        let mut temp = a;
+        let mut nombre_chiffres = 0;
+        while temp > 0 {
+            temp /= 10;
+            nombre_chiffres += 1;
+        }
+
+        let mut diviseur = 1;
+        if nombre_chiffres % 2 == 0 {
+            for _ in 0..(nombre_chiffres / 2) {
+                diviseur *= 10;
+            }
+        }
+
+        for range in a..=b
+        {
+            if nombre_chiffres % 2 == 0 {
+                let gauche = range / diviseur;
+                let droite = range % diviseur;
+
+                if gauche == droite {
+                    result += range;
+                }
+            }
+        }
+    }
+
+    result
+}
+
+
 pub fn d2p2_v1(s: &str) -> usize {
-    std::thread::sleep(Duration::from_millis(40));
+    //std::thread::sleep(Duration::from_millis(40));
     let mut result = 0;
     let product_ids:Vec<&str> = s.split(',').collect();
 
