@@ -1,4 +1,4 @@
-use crate::d2::{d2p1_v1, d2p1_v2, d2p1_v3,  d2p2_v1};
+use crate::d2::{d2p1_v1, d2p1_v2, d2p1_v3, d2p2_v1};
 use criterion::{Criterion, criterion_group, criterion_main};
 use std::hint::black_box;
 
