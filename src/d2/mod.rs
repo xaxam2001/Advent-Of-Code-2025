@@ -1,35 +1,31 @@
 use std::time::Duration;
 
 pub fn d2p1_v1(s: &str) -> usize {
+    //std::thread::sleep(Duration::from_millis(40));
     let mut result = 0;
+    let product_ids:Vec<&str> = s.split(',').collect();
 
-    for product_id in s.split(',')
+    for product_id in &product_ids
     {
         let ids:Vec<&str> = product_id.split('-').collect();
         let a = ids[0].parse::<usize>().unwrap();
         let b = ids[1].parse::<usize>().unwrap();
 
-        let mut temp = a;
-        let mut nombre_chiffres = 0;
-        while temp > 0 {
-            temp /= 10;
-            nombre_chiffres += 1;
-        }
-
-        let mut diviseur = 1;
-        if nombre_chiffres % 2 == 0 {
-            for _ in 0..(nombre_chiffres / 2) {
-                diviseur *= 10;
-            }
-        }
-
         for range in a..=b
         {
-            if nombre_chiffres % 2 == 0 {
-                let gauche = range / diviseur;
-                let droite = range % diviseur;
+            let id_str = &range.to_string();
+            let length = id_str.len();
 
-                if gauche == droite {
+            if !length % 2 == 0 {
+                continue;
+            }
+            else if length % 2 == 0 && length > 0
+            {
+                let middle = length / 2;
+                let a = &id_str[..middle];
+                let b = &id_str[middle..length];
+
+                if a == b {
                     result += range;
                 }
             }
