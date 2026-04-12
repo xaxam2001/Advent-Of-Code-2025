@@ -2,6 +2,7 @@ use std::time::Duration;
 
 pub fn d2p1_v1(s: &str) -> usize {
     //std::thread::sleep(Duration::from_millis(40));
+
     let mut result = 0;
     let product_ids:Vec<&str> = s.split(',').collect();
 
@@ -115,6 +116,7 @@ pub fn d2p1_v3(s: &str) -> usize {
 
 pub fn d2p2_v1(s: &str) -> usize {
     //std::thread::sleep(Duration::from_millis(40));
+
     let mut result = 0;
     let product_ids:Vec<&str> = s.split(',').collect();
 
@@ -144,6 +146,68 @@ pub fn d2p2_v1(s: &str) -> usize {
                 {
                     result += range;
                     break;
+                }
+            }
+        }
+    }
+
+    result
+}
+
+pub fn d2p2_v2(s: &str) -> usize {
+    //std::thread::sleep(Duration::from_millis(40));
+    let mut result = 0;
+
+    for product_id in s.split(',') {
+        let parts: Vec<&str> = product_id.split('-').collect();
+        let a = parts[0].parse::<usize>().unwrap();
+        let b = parts[1].parse::<usize>().unwrap();
+
+        let mut temp = a;
+        let mut nb_chiffres = 0;
+        while temp > 0 {
+            temp /= 10;
+            nb_chiffres += 1;
+        }
+
+        let mut diviseurs_puissances = Vec::new();
+        for i in 1..=(nb_chiffres / 2) {
+            if nb_chiffres % i == 0 {
+                diviseurs_puissances.push(10_usize.pow(i as u32));
+            }
+        }
+
+        for range in a..=b
+        {
+            let id_str = &range.to_string();
+            let chars:Vec<char> = range.to_string().chars().collect();
+            let length = chars.len();
+
+            let middle = length / 2;
+
+            for range in a..=b {
+                for &puissance in &diviseurs_puissances {
+                    let sequence = range % puissance;
+
+                    let mut test_repetition = 0;
+                    let mut multiplicateur = 1;
+
+                    let mut est_valide = true;
+                    let mut n = range;
+                    let motif = range % puissance;
+
+                    while n > 0 {
+                        if n % puissance != motif {
+                            est_valide = false;
+                            break;
+                        }
+                        n /= puissance;
+                    }
+
+                    if est_valide {
+                        result += range;
+                        break; // On a trouvé, on passe au nombre suivant
+                    }
                 }
             }
         }
