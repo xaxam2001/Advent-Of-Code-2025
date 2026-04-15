@@ -72,6 +72,10 @@ using u8 list instead of str
 ### v4
 getting rid of the double loop, refined logic
 
-## d3p2
+## d8p1
 
 ### v2
+compute the points coordinates value ahead one time for all
+
+### v3
+used squared distance to get rid of the computation of a square root

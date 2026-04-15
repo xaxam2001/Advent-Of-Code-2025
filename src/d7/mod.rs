@@ -2,6 +2,7 @@ pub fn d7p1(s: &str) -> usize {
     d7p1_v1(s)
 }
 
+#[allow(unused)]
 pub fn d7p1_v1(s: &str) -> usize {
     let mut total_split = 0;
 
@@ -44,6 +45,7 @@ pub fn d7p2(s: &str) -> usize {
     d7p2_v1(s)
 }
 
+#[allow(unused)]
 pub fn d7p2_v1(s: &str) -> usize {
 
     // Break the string into lines (to be able to modify it)
