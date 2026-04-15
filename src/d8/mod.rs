@@ -154,7 +154,8 @@ pub fn d8p1_v2(s: &str, n_shortest_connection: usize) -> usize {
 pub fn d8p1_v3(s: &str, n_shortest_connection: usize) -> usize {
 
     // create the points ahead to avoid parsing twice the same values
-    let points: Vec<[i64; 3]> = s
+    // BOTTLENECK 1 : parse str + heap
+    let points: Vec<[i32; 3]> = s
         .lines()
         .map(|line| {
             let mut parts = line.split(',');
@@ -169,7 +170,9 @@ pub fn d8p1_v3(s: &str, n_shortest_connection: usize) -> usize {
     let n = points.len(); // get the number of points
 
     // This vec contains (distance_squared, index1, index2)
-    let mut distances: Vec<(i64, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+    // BOTTLENECK 2 : heap alloc
+    // cache L3 CPU 24MB, in d8.txt 1000 points. 1000 choose 2 =  499500 dist on i32 = ~2MB should be storable on cache CPU 
+    let mut distances: Vec<(i32, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
 
     // loop over all the lines (the O(n2) part)
     for i in 0..n {
@@ -193,7 +196,7 @@ pub fn d8p1_v3(s: &str, n_shortest_connection: usize) -> usize {
 
     // network representation
     // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
-    let mut parent: Vec<usize> = (0..n).collect(); // at first each one is it's own parent
+    let mut parent: Vec<usize> = (0..n).collect(); // at first each one is its own parent
     let mut size: Vec<usize> = vec![1; n];
 
 
@@ -232,7 +235,7 @@ pub fn d8p2_v1(s: &str) -> usize {
 
     for (i, line) in s.lines().enumerate() {
         let mut parts_1 = line.split(',');
-        let parts_1: [i32; 3] = [
+        let parts_1: [u32; 3] = [
             parts_1.next().unwrap().parse().unwrap(),
             parts_1.next().unwrap().parse().unwrap(),
             parts_1.next().unwrap().parse().unwrap(),
@@ -242,7 +245,7 @@ pub fn d8p2_v1(s: &str) -> usize {
             let line_j = s.lines().nth(j).unwrap();
 
             let mut parts_2 = line_j.split(',');
-            let parts_2: [i32; 3] = [
+            let parts_2: [u32; 3] = [
                 parts_2.next().unwrap().parse().unwrap(),
                 parts_2.next().unwrap().parse().unwrap(),
                 parts_2.next().unwrap().parse().unwrap(),
@@ -270,7 +273,7 @@ pub fn d8p2_v1(s: &str) -> usize {
     let mut size: Vec<usize> = vec![1; n];
 
     // Process the connections shortest by shortest until they are all connected to one network
-    for &(_, i, j, x1, x2) in distances.iter() {
+    for &(_, i, j, x1, x2) in &distances {
         let root_i = find(i, &mut parent);
         let root_j = find(j, &mut parent);
 
