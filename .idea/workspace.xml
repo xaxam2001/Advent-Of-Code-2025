@@ -11,13 +11,23 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="194c2d95-4ed6-4ccc-b7fc-69d458b3e9ab" name="Changes" comment="" />
+    <list default="true" id="194c2d95-4ed6-4ccc-b7fc-69d458b3e9ab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d1.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d1.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d2.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d2.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d3.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d3.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bench_d5.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d5.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d1/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d1/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d2/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d2/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d3/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d3/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d5/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d5/mod.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:test" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -90,6 +100,7 @@
     &quot;Cargo.Test d2::tests::d2p2_test.executor&quot;: &quot;Run&quot;,
     &quot;Cargo.Test d3.executor&quot;: &quot;Run&quot;,
     &quot;Cargo.Test d4.executor&quot;: &quot;Run&quot;,
+    &quot;Cargo.Test d5::tests::d5p1_test.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -114,7 +125,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Cargo.Test d2::tests">
+  <component name="RunManager" selected="Cargo.Run Advent-Of-Code-2025">
     <configuration name="Run Advent-Of-Code-2025" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025" />
@@ -150,9 +161,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test d2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="buildProfileId" value="test" />
-      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d2" />
+    <configuration name="Test d1::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d1::tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -204,9 +214,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test d3" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="buildProfileId" value="test" />
-      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d3" />
+    <configuration name="Test d2::tests::d2p2_test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d2::tests::d2p2_test -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -222,9 +231,9 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test d4" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <configuration name="Test d5::tests::d5p1_test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="buildProfileId" value="test" />
-      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d4" />
+      <option name="command" value="test --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025 d5::tests::d5p1_test -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -243,19 +252,19 @@
     <list>
       <item itemvalue="Cargo.Run Advent-Of-Code-2025" />
       <item itemvalue="Cargo.Test Advent-Of-Code-2025" />
+      <item itemvalue="Cargo.Test d1::tests" />
       <item itemvalue="Cargo.Test d2::tests" />
       <item itemvalue="Cargo.Test d2::tests::d2p1_test" />
-      <item itemvalue="Cargo.Test d3" />
-      <item itemvalue="Cargo.Test d4" />
-      <item itemvalue="Cargo.Test d2" />
+      <item itemvalue="Cargo.Test d2::tests::d2p2_test" />
+      <item itemvalue="Cargo.Test d5::tests::d5p1_test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test d2::tests" />
+        <item itemvalue="Cargo.Test d5::tests::d5p1_test" />
         <item itemvalue="Cargo.Test d2::tests::d2p1_test" />
-        <item itemvalue="Cargo.Test d4" />
-        <item itemvalue="Cargo.Test d3" />
-        <item itemvalue="Cargo.Test d2" />
+        <item itemvalue="Cargo.Test d2::tests::d2p2_test" />
+        <item itemvalue="Cargo.Test d1::tests" />
+        <item itemvalue="Cargo.Test d2::tests" />
       </list>
     </recent_temporary>
   </component>
@@ -278,10 +287,25 @@
       <workItem from="1771929575050" duration="5358000" />
       <workItem from="1772182335231" duration="1314000" />
       <workItem from="1772698665919" duration="23417000" />
+      <workItem from="1775998714608" duration="6992000" />
+      <workItem from="1776028843244" duration="146000" />
+      <workItem from="1776150632932" duration="15800000" />
+      <workItem from="1776170646780" duration="1801000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/d4/mod.rs</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

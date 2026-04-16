@@ -1,16 +1,15 @@
 use std::time::Duration;
 
-
 pub fn d1p1_v1(s: &str) -> usize {
-    std::thread::sleep(Duration::from_millis(40));
+    //std::thread::sleep(Duration::from_millis(40));
     let mut result: i32 = 0;
     let mut position:i32 = 50;
 
     let rotations = s.split_whitespace();
 
     for rotation in  rotations {
-        let (dir, rot) = rotation.split_at(1);
-        let rot: i32 = rot.parse().unwrap_or(0);
+        let (dir, rot) = rotation.split_at(1); //ok car L et R = 1 octet
+        let rot: i32 = rot.parse().unwrap_or(0); //conversion entier
 
         if dir == "L" {
             position = (position - rot).rem_euclid(100);
@@ -23,8 +22,30 @@ pub fn d1p1_v1(s: &str) -> usize {
     result as usize
 }
 
+pub fn d1p1_v2(s: &str) -> usize {
+    let mut result = 0;
+    let mut position: i32 = 50;
+
+    for rotation in s.split_whitespace() {
+        let bytes = rotation.as_bytes();
+        let dir = bytes[0];
+
+        let rot = rotation[1..].parse::<i32>().unwrap_or(0);
+
+        if dir == b'L' {
+            position = (position - rot).rem_euclid(100);
+        } else {
+            position = (position + rot).rem_euclid(100);
+        }
+
+        if position == 0 { result += 1; }
+    }
+    result as usize
+}
+
+
 pub fn d1p2_v1(s: &str) -> usize {
-    std::thread::sleep(Duration::from_millis(30));
+    //std::thread::sleep(Duration::from_millis(30));
 
     let mut result: i32 = 0;
     let mut position:i32 = 50;
@@ -54,7 +75,7 @@ pub fn d1p2(s: &str) -> usize {
 }
 
 pub fn d1p1(s: &str) -> usize {
-    d1p1_v1(s)
+    d1p1_v2(s)
 }
 
 #[cfg(test)]

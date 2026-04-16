@@ -14,7 +14,7 @@ pub fn d2p1_v1(s: &str) -> usize {
 
         for range in a..=b
         {
-            let id_str = &range.to_string();
+            let id_str = &range.to_string(); // allocation new string heap
             let length = id_str.len();
 
             if !length % 2 == 0 {
@@ -48,7 +48,7 @@ pub fn d2p1_v2(s: &str) -> usize {
         for range in a..=b
         {
             let mut temp = range;
-            let mut nombre_chiffres = 0;
+            let mut nombre_chiffres = 0; // Plus de chaines de caracterse
             while temp > 0 {
                 temp /= 10;
                 nombre_chiffres += 1;
@@ -85,22 +85,35 @@ pub fn d2p1_v3(s: &str) -> usize {
         let b = ids[1].parse::<usize>().unwrap();
 
         let mut temp = a;
-        let mut nombre_chiffres = 0;
-        while temp > 0 {
-            temp /= 10;
-            nombre_chiffres += 1;
-        }
-
-        let mut diviseur = 1;
-        if nombre_chiffres % 2 == 0 {
-            for _ in 0..(nombre_chiffres / 2) {
-                diviseur *= 10;
-            }
-        }
-
-        for range in a..=b
+        let mut nb_chiffres = 0;
+        while temp > 0
         {
-            if nombre_chiffres % 2 == 0 {
+            temp /= 10; nb_chiffres += 1;
+        }
+
+        let mut seuil = 1;
+        for _ in 0..nb_chiffres
+        {
+            seuil *= 10;
+        }
+        //préc-alcule avant le range
+        let mut diviseur = 1;
+        if nb_chiffres % 2 == 0
+        {
+            diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
+        }
+
+        for range in a..=b {
+            //si on chnage de puissiance
+            if range >= seuil {
+                nb_chiffres += 1;
+                seuil *= 10;
+            }
+
+            if nb_chiffres % 2 == 0 {
+                let mut diviseur = 1;
+                for _ in 0..(nb_chiffres / 2) { diviseur *= 10; }
+
                 let gauche = range / diviseur;
                 let droite = range % diviseur;
 
@@ -110,7 +123,6 @@ pub fn d2p1_v3(s: &str) -> usize {
             }
         }
     }
-
     result
 }
 
@@ -217,11 +229,11 @@ pub fn d2p2_v2(s: &str) -> usize {
 }
 
 pub fn d2p1(s: &str) -> usize {
-    d2p1_v1(s)
+    d2p1_v3(s)
 }
 
 pub fn d2p2(s: &str) -> usize {
-    d2p2_v1(s)
+    d2p2_v2(s)
 }
 
 #[cfg(test)]

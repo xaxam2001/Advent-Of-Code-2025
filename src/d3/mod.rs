@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 pub fn d3p1_v1(s: &str) -> usize {
-    std::thread::sleep(Duration::from_millis(40));
+    //std::thread::sleep(Duration::from_millis(40));
 
     let mut somme_total = 0;
 
@@ -39,14 +39,73 @@ pub fn d3p1_v1(s: &str) -> usize {
     somme_total.try_into().unwrap()
 }
 
+pub fn d3p1_v2(s: &str) -> usize {
+    let mut somme_total = 0;
+
+    for batterie in s.split_whitespace()
+    {
+        let bytes = batterie.as_bytes(); //accès mémoire
+
+        let mut max_banque = 0;
+
+        for i in 0..bytes.len()
+        {
+            let dizaine = (bytes[i] - b'0') as i32; // conversion
+
+            for j in i+1..bytes.len()
+            {
+                let unite = (bytes[j] - b'0') as i32;
+
+                let joltage = dizaine * 10 + unite;
+
+                if joltage > max_banque { max_banque = joltage; }
+            }
+        }
+
+        somme_total += max_banque;
+
+    }
+    somme_total as usize
+}
+
+pub fn d3p1_v3(s: &str) -> usize {
+
+    let mut somme_total = 0;
+
+    for batterie in s.split_whitespace()
+    {
+        let bytes = batterie.as_bytes();
+        let mut max_banque = 0;
+        let mut max_chiffre_vu = -1;
+
+        for &b in bytes
+        {
+            let chiffre = (b - b'0') as i32;
+
+            if max_chiffre_vu != -1
+            {
+                let combo = max_chiffre_vu * 10 + chiffre;
+                if combo > max_banque
+                {
+                    max_banque = combo;
+                }
+            }
+
+            if chiffre > max_chiffre_vu { max_chiffre_vu = chiffre; }
+        }
+        somme_total += max_banque;
+    }
+    somme_total as usize
+}
+
 pub fn d3p2_v1(_s: &str) -> usize {
-    std::thread::sleep(Duration::from_millis(40));
+    //std::thread::sleep(Duration::from_millis(40));
 
    0
 }
 
 pub fn d3p1(s: &str) -> usize {
-    d3p1_v1(s)
+    d3p1_v2(s)
 }
 
 pub fn d3p2(s: &str) -> usize {

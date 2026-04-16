@@ -1,4 +1,4 @@
-use crate::d5::{d5p1_v1, d5p1_v2, d5p2_v1};
+use crate::d5::{d5p1_v1, d5p1_v2};
 use criterion::{Criterion, criterion_group, criterion_main};
 use std::hint::black_box;
 
@@ -12,10 +12,6 @@ pub fn d5(c: &mut Criterion) {
 
     group.bench_function("d5p1_v2", |b| {
         b.iter(|| d5p1_v2(black_box(include_str!("d5/d5.txt"))))
-    });
-
-    group.bench_function("d5p2_v1", |b| {
-        b.iter(|| d5p2_v1(black_box(include_str!("d5/d5.txt"))))
     });
 }
 
