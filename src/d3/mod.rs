@@ -98,6 +98,43 @@ pub fn d3p1_v3(s: &str) -> usize {
     somme_total as usize
 }
 
+pub fn d3p1_v4(s: &str) -> usize {
+
+    let mut somme_total = 0;
+    let bytes = s.as_bytes();
+
+    let mut max_banque = 0;
+    let mut max_chiffre_vu = -1;
+
+    for &b in bytes
+    {
+        if b == b' ' || b == b'\n' || b == b'\r' {
+            if max_banque > 0 {
+                somme_total += max_banque as usize;
+                // Reset pour la batterie suivante
+                max_banque = 0;
+                max_chiffre_vu = -1;
+            }
+            continue;
+        }
+
+        let chiffre = (b - b'0') as i32;
+
+        if max_chiffre_vu != -1 {
+            let combo = max_chiffre_vu * 10 + chiffre;
+            if combo > max_banque {
+                max_banque = combo;
+            }
+        }
+
+        if chiffre > max_chiffre_vu {
+            max_chiffre_vu = chiffre;
+        }
+    }
+    somme_total += max_banque as usize;
+    somme_total
+}
+
 pub fn d3p2_v1(_s: &str) -> usize {
     //std::thread::sleep(Duration::from_millis(40));
 
@@ -105,7 +142,7 @@ pub fn d3p2_v1(_s: &str) -> usize {
 }
 
 pub fn d3p1(s: &str) -> usize {
-    d3p1_v2(s)
+    d3p1_v4(s)
 }
 
 pub fn d3p2(s: &str) -> usize {

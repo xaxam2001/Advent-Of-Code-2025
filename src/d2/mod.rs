@@ -126,6 +126,131 @@ pub fn d2p1_v3(s: &str) -> usize {
     result
 }
 
+pub fn d2p1_v4(s: &str) -> usize {
+    let mut result = 0;
+
+    for product_id in s.as_bytes().split(|&b| b == b',')
+    {
+        let ids:Vec<&[u8]> = product_id.split(|&b| b == b'-').collect();
+
+        let mut a = 0;
+        for &chiffre in ids[0]
+        {
+            a = a * 10 + (chiffre - b'0') as usize;
+        }
+
+        let mut b = 0;
+        for &chiffre in ids[1]
+        {
+            b = b * 10 + (chiffre - b'0') as usize;
+        }
+
+        let mut temp = a;
+        let mut nb_chiffres = 0;
+        while temp > 0
+        {
+            temp /= 10; nb_chiffres += 1;
+        }
+
+        let mut seuil = 1;
+        for _ in 0..nb_chiffres
+        {
+            seuil *= 10;
+        }
+        //préc-alcule avant le range
+        let mut diviseur = 1;
+        if nb_chiffres % 2 == 0
+        {
+            diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
+        }
+
+        for range in a..=b {
+            //si on chnage de puissiance
+            if range >= seuil {
+                nb_chiffres += 1;
+                seuil *= 10;
+            }
+
+            if nb_chiffres % 2 == 0 {
+                let mut diviseur = 1;
+                for _ in 0..(nb_chiffres / 2) { diviseur *= 10; }
+
+                let gauche = range / diviseur;
+                let droite = range % diviseur;
+
+                if gauche == droite {
+                    result += range;
+                }
+            }
+        }
+    }
+    result
+}
+
+pub fn d2p1_v5(s: &str) -> usize {
+    let mut result = 0;
+
+    for product_id in s.as_bytes().split(|&b| b == b',')
+    {
+        let ids:Vec<&[u8]> = product_id.split(|&b| b == b'-').collect();
+
+        let mut a = 0;
+        for &chiffre in ids[0]
+        {
+            a = a * 10 + (chiffre - b'0') as usize;
+        }
+
+        let mut b = 0;
+        for &chiffre in ids[1]
+        {
+            b = b * 10 + (chiffre - b'0') as usize;
+        }
+
+        let mut temp = a;
+        let mut nb_chiffres = 0;
+        while temp > 0
+        {
+            temp /= 10; nb_chiffres += 1;
+        }
+
+        let mut seuil = 1;
+        for _ in 0..nb_chiffres
+        {
+            seuil *= 10;
+        }
+        //préc-alcule avant le range
+        let mut diviseur = 1;
+        if nb_chiffres % 2 == 0
+        {
+            diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
+        }
+
+        for range in a..=b {
+            //si on chnage de puissiance
+            if range >= seuil {
+                nb_chiffres += 1;
+                seuil *= 10;
+
+                if nb_chiffres % 2 == 0 {
+                    diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
+                } else {
+                    diviseur = 0; // Impair : pas de diviseur utile
+                }
+            }
+
+            if diviseur != 0 {
+                let gauche = range / diviseur;
+                let droite = range % diviseur;
+
+                if gauche == droite {
+                    result += range;
+                }
+            }
+        }
+    }
+    result
+}
+
 pub fn d2p2_v1(s: &str) -> usize {
     //std::thread::sleep(Duration::from_millis(40));
 

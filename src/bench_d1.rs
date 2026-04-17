@@ -1,4 +1,4 @@
-use crate::d1::{d1p1_v1, d1p1_v2, d1p2_v1};
+use crate::d1::{d1p1_v1, d1p1_v2, d1p1_v3, d1p1_v4, d1p2_v1};
 use criterion::{Criterion, criterion_group, criterion_main};
 use std::hint::black_box;
 
@@ -12,6 +12,14 @@ pub fn d1(c: &mut Criterion) {
 
     group.bench_function("d1p1_v2", |b| {
         b.iter(|| d1p1_v2(black_box(include_str!("d1/d1.txt"))))
+    });
+
+    group.bench_function("d1p1_v3", |b| {
+        b.iter(|| d1p1_v3(black_box(include_str!("d1/d1.txt"))))
+    });
+
+    group.bench_function("d1p1_v4", |b| {
+        b.iter(|| d1p1_v4(black_box(include_str!("d1/d1.txt"))))
     });
 
     group.bench_function("d1p2_v1", |b| {

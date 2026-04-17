@@ -3,7 +3,7 @@ use std::time::Duration;
 pub fn d1p1_v1(s: &str) -> usize {
     //std::thread::sleep(Duration::from_millis(40));
     let mut result: i32 = 0;
-    let mut position:i32 = 50;
+    let mut position:i32 = 0;
 
     let rotations = s.split_whitespace();
 
@@ -24,7 +24,7 @@ pub fn d1p1_v1(s: &str) -> usize {
 
 pub fn d1p1_v2(s: &str) -> usize {
     let mut result = 0;
-    let mut position: i32 = 50;
+    let mut position: i32 = 0;
 
     for rotation in s.split_whitespace() {
         let bytes = rotation.as_bytes();
@@ -36,6 +36,48 @@ pub fn d1p1_v2(s: &str) -> usize {
             position = (position - rot).rem_euclid(100);
         } else {
             position = (position + rot).rem_euclid(100);
+        }
+
+        if position == 0 { result += 1; }
+    }
+    result as usize
+}
+
+pub fn d1p1_v3(s: &str) -> usize {
+    let mut result = 0;
+    let mut position: i32 = 0;
+
+    for rotation in s.split_whitespace() {
+        let bytes = rotation.as_bytes();
+        let dir = bytes[0];
+
+        let rot = rotation[1..].parse::<i32>().unwrap_or(0);
+
+        if dir == b'R' {
+            position = (position + rot).rem_euclid(100);
+        } else {
+            position = (position - rot).rem_euclid(100);
+        }
+
+        if position == 0 { result += 1; }
+    }
+    result as usize
+}
+
+pub fn d1p1_v4(s: &str) -> usize {
+    let mut result = 0;
+    let mut position: i32 = 0;
+
+    for rotation in s.split_whitespace() {
+        let bytes = rotation.as_bytes();
+        let dir = bytes[0];
+
+        let rot = rotation[1..].parse::<i32>().unwrap_or(0);
+
+        if dir == b'L' {
+            position = (position - rot + 100) % 100;
+        } else {
+            position = (position + rot) % 100;
         }
 
         if position == 0 { result += 1; }
@@ -75,7 +117,7 @@ pub fn d1p2(s: &str) -> usize {
 }
 
 pub fn d1p1(s: &str) -> usize {
-    d1p1_v2(s)
+    d1p1_v3(s)
 }
 
 #[cfg(test)]
