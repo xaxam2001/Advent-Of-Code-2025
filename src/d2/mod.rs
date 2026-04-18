@@ -218,7 +218,7 @@ pub fn d2p1_v5(s: &str) -> usize {
         let mut diviseur = 1;
         if nb_chiffres % 2 == 0
         {
-            diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
+            diviseur = 10_usize.pow((nb_chiffres / 2) as u32); //new : utilisation de pow ou table interne
         }
 
         for range in a..=b

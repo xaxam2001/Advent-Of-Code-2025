@@ -3,7 +3,8 @@ use std::time::Duration;
 pub fn d5p1_v1(s: &str) -> usize {
     let mut total = 0;
 
-    let sample:Vec<&str> = s.split("\r\n\r\n").collect();
+    let s_normalized = s.replace("\r\n", "\n");
+    let sample: Vec<&str> = s_normalized.split("\n\n").collect();
     // separation interval / ingrédient
     let sample_a:Vec<&str> = sample[0].split_whitespace().collect();
     let sample_b:Vec<&str> = sample[1].split_whitespace().collect();
@@ -55,9 +56,10 @@ pub fn d5p1_v2(s: &str) -> usize {
     let mut total = 0;
 
     // séparation bloc règles / bloc produits
-    let sections: Vec<&str> = s.split("\r\n\r\n").collect();
-    let sample_a = sections[0];
-    let sample_b = sections[1];
+    let s_normalized = s.replace("\r\n", "\n");
+    let sample: Vec<&str> = s_normalized.split("\n\n").collect();
+    let sample_a = sample[0];
+    let sample_b = sample[1];
 
     let mut ids_available = Vec::new();
     // préparation des plages d'ids
@@ -122,7 +124,7 @@ pub fn d5p2_v1(s: &str) -> usize {
 }
 
 pub fn d5p1(s: &str) -> usize {
-    d5p1_v2(s)
+    d5p1_v1(s)
 }
 
 pub fn d5p2(s: &str) -> usize {
