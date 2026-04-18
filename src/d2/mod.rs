@@ -22,10 +22,12 @@ pub fn d2p1_v1(s: &str) -> usize {
             }
             else if length % 2 == 0 && length > 0
             {
-                let middle = length / 2;
+                let middle = length / 2; // middle index
+                // découpage de chaîne
                 let a = &id_str[..middle];
                 let b = &id_str[middle..length];
 
+                //comparaison de caractère
                 if a == b {
                     result += range;
                 }
@@ -47,8 +49,9 @@ pub fn d2p1_v2(s: &str) -> usize {
 
         for range in a..=b
         {
+            // calcul du nombre de chiffres par division
             let mut temp = range;
-            let mut nombre_chiffres = 0; // Plus de chaines de caracterse
+            let mut nombre_chiffres = 0; // Plus de chaines de caracterse donc 0 Allocations
             while temp > 0 {
                 temp /= 10;
                 nombre_chiffres += 1;
@@ -57,6 +60,7 @@ pub fn d2p1_v2(s: &str) -> usize {
             if nombre_chiffres > 0 && nombre_chiffres % 2 == 0 {
                 let moitie = nombre_chiffres / 2;
 
+                // création du diviseur pour séparer le nombre
                 let mut diviseur = 1;
                 for _ in 0..moitie {
                     diviseur *= 10;
@@ -65,6 +69,7 @@ pub fn d2p1_v2(s: &str) -> usize {
                 let gauche = range / diviseur;
                 let droite = range % diviseur;
 
+                // compare deux entier
                 if gauche == droite {
                     result += range;
                 }
@@ -91,20 +96,15 @@ pub fn d2p1_v3(s: &str) -> usize {
             temp /= 10; nb_chiffres += 1;
         }
 
+        // seuil pour éviter de recompter les chiffres à chaque itération
         let mut seuil = 1;
         for _ in 0..nb_chiffres
         {
             seuil *= 10;
-        }
-        //préc-alcule avant le range
-        let mut diviseur = 1;
-        if nb_chiffres % 2 == 0
-        {
-            diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
-        }
+        } // evite de recompter le nombre de chiffre à chaque fois
 
         for range in a..=b {
-            //si on chnage de puissiance
+            //si on chnage de puissiance : maj du nb_chiffres uniquement au changement d'unité
             if range >= seuil {
                 nb_chiffres += 1;
                 seuil *= 10;
@@ -129,10 +129,12 @@ pub fn d2p1_v3(s: &str) -> usize {
 pub fn d2p1_v4(s: &str) -> usize {
     let mut result = 0;
 
-    for product_id in s.as_bytes().split(|&b| b == b',')
+    // travail sur des octets donc plus de vérif utf8
+    for product_id in s.as_bytes().split(|&b| b == b',') //suite d'octet
     {
-        let ids:Vec<&[u8]> = product_id.split(|&b| b == b'-').collect();
+        let ids:Vec<&[u8]> = product_id.split(|&b| b == b'-').collect(); //check le '-' directement mais .collect donc allo heap
 
+        // parsing manuel
         let mut a = 0;
         for &chiffre in ids[0]
         {
@@ -143,7 +145,7 @@ pub fn d2p1_v4(s: &str) -> usize {
         for &chiffre in ids[1]
         {
             b = b * 10 + (chiffre - b'0') as usize;
-        }
+        } // passage en octet en usize = + rapide que parse
 
         let mut temp = a;
         let mut nb_chiffres = 0;
@@ -156,12 +158,6 @@ pub fn d2p1_v4(s: &str) -> usize {
         for _ in 0..nb_chiffres
         {
             seuil *= 10;
-        }
-        //préc-alcule avant le range
-        let mut diviseur = 1;
-        if nb_chiffres % 2 == 0
-        {
-            diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
         }
 
         for range in a..=b {
@@ -218,19 +214,22 @@ pub fn d2p1_v5(s: &str) -> usize {
         {
             seuil *= 10;
         }
-        //préc-alcule avant le range
+        // pré-calcul du diviseur avant la boucle
         let mut diviseur = 1;
         if nb_chiffres % 2 == 0
         {
             diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
         }
 
-        for range in a..=b {
+        for range in a..=b
+        {
             //si on chnage de puissiance
-            if range >= seuil {
+            if range >= seuil
+            {
                 nb_chiffres += 1;
                 seuil *= 10;
 
+                // recalcul du diviseur uniquement si nécessaire
                 if nb_chiffres % 2 == 0 {
                     diviseur = 10_usize.pow((nb_chiffres / 2) as u32);
                 } else {
@@ -238,7 +237,8 @@ pub fn d2p1_v5(s: &str) -> usize {
                 }
             }
 
-            if diviseur != 0 {
+            if diviseur != 0 // diviseur est impair, ignore
+            {
                 let gauche = range / diviseur;
                 let droite = range % diviseur;
 
@@ -354,7 +354,7 @@ pub fn d2p2_v2(s: &str) -> usize {
 }
 
 pub fn d2p1(s: &str) -> usize {
-    d2p1_v3(s)
+    d2p1_v1(s)
 }
 
 pub fn d2p2(s: &str) -> usize {

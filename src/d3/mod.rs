@@ -7,15 +7,17 @@ pub fn d3p1_v1(s: &str) -> usize {
 
     for batterie in s.split_whitespace()
     {
-        let mut numbers:Vec<i32> = Vec::new();
+        let mut numbers:Vec<i32> = Vec::new(); //allocation d'un Vec sur heap à chaque batterie
 
         let mut max_banque = 0;
 
         for c in batterie.chars()
         {
+            // conversion via unicode
             numbers.push(c.to_digit(10).unwrap() as i32);
         }
 
+        // double boucle : compare chaque chiffre avec tous les suivants
         for i in 0..numbers.len()-1
         {
             let valeur_dizaine = numbers[i];
@@ -44,13 +46,13 @@ pub fn d3p1_v2(s: &str) -> usize {
 
     for batterie in s.split_whitespace()
     {
-        let bytes = batterie.as_bytes(); //accès mémoire
+        let bytes = batterie.as_bytes(); // accès direct
 
         let mut max_banque = 0;
 
         for i in 0..bytes.len()
         {
-            let dizaine = (bytes[i] - b'0') as i32; // conversion
+            let dizaine = (bytes[i] - b'0') as i32; // conversion ASCII
 
             for j in i+1..bytes.len()
             {
@@ -76,7 +78,7 @@ pub fn d3p1_v3(s: &str) -> usize {
     {
         let bytes = batterie.as_bytes();
         let mut max_banque = 0;
-        let mut max_chiffre_vu = -1;
+        let mut max_chiffre_vu = -1; // garder le plus grand chiffre précédent
 
         for &b in bytes
         {
@@ -84,13 +86,14 @@ pub fn d3p1_v3(s: &str) -> usize {
 
             if max_chiffre_vu != -1
             {
-                let combo = max_chiffre_vu * 10 + chiffre;
+                let combo = max_chiffre_vu * 10 + chiffre;//addition du max précédent
                 if combo > max_banque
                 {
                     max_banque = combo;
                 }
             }
 
+            //maj du meilleur chiffre des dizaine
             if chiffre > max_chiffre_vu { max_chiffre_vu = chiffre; }
         }
         somme_total += max_banque;
@@ -101,17 +104,20 @@ pub fn d3p1_v3(s: &str) -> usize {
 pub fn d3p1_v4(s: &str) -> usize {
 
     let mut somme_total = 0;
-    let bytes = s.as_bytes();
+    let bytes = s.as_bytes(); // parcours global du fichier
 
     let mut max_banque = 0;
     let mut max_chiffre_vu = -1;
 
     for &b in bytes
     {
-        if b == b' ' || b == b'\n' || b == b'\r' {
+        // gestion manuelle des séparateurs
+        if b == b' ' || b == b'\n' || b == b'\r'
+        {
+            // car plus de split whitespace donc gestion à la fin d'une batterie
             if max_banque > 0 {
                 somme_total += max_banque as usize;
-                // Reset pour la batterie suivante
+                // reset manuel de l'état pour la batterie suivante
                 max_banque = 0;
                 max_chiffre_vu = -1;
             }

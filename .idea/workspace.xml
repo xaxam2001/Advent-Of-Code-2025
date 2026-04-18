@@ -13,13 +13,11 @@
   <component name="ChangeListManager">
     <list default="true" id="194c2d95-4ed6-4ccc-b7fc-69d458b3e9ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bench_d1.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d1.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bench_d2.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d2.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bench_d3.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d3.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bench_d5.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/bench_d5.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/d1/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d1/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/d2/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d2/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/d3/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d3/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/d5/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/d5/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +123,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Cargo.Test d3::tests::d3p1_test">
+  <component name="RunManager" selected="Cargo.Test d5::tests::d5p1_test">
     <configuration name="Run Advent-Of-Code-2025" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package Advent-Of-Code-2025 --bin Advent-Of-Code-2025" />
@@ -251,6 +249,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test d5::tests::d5p1_test" />
         <item itemvalue="Cargo.Test d3::tests::d3p1_test" />
         <item itemvalue="Cargo.Test d1::tests::d1p1_test" />
       </list>
@@ -282,6 +281,7 @@
       <workItem from="1776361272234" duration="63000" />
       <workItem from="1776361347478" duration="4381000" />
       <workItem from="1776451280206" duration="402000" />
+      <workItem from="1776518630723" duration="9785000" />
     </task>
     <servers />
   </component>

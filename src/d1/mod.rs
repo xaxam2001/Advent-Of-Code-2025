@@ -8,6 +8,7 @@ pub fn d1p1_v1(s: &str) -> usize {
     let rotations = s.split_whitespace();
 
     for rotation in  rotations {
+        // découpage de chaîne au 1er caractère
         let (dir, rot) = rotation.split_at(1); //ok car L et R = 1 octet
         let rot: i32 = rot.parse().unwrap_or(0); //conversion entier
 
@@ -27,12 +28,13 @@ pub fn d1p1_v2(s: &str) -> usize {
     let mut position: i32 = 0;
 
     for rotation in s.split_whitespace() {
+        // accès direct au premier octet
         let bytes = rotation.as_bytes();
         let dir = bytes[0];
 
         let rot = rotation[1..].parse::<i32>().unwrap_or(0);
 
-        if dir == b'L' {
+        if dir == b'L' { // comparaison binaire avec b'L'
             position = (position - rot).rem_euclid(100);
         } else {
             position = (position + rot).rem_euclid(100);
@@ -53,6 +55,8 @@ pub fn d1p1_v3(s: &str) -> usize {
 
         let rot = rotation[1..].parse::<i32>().unwrap_or(0);
 
+
+        // test : passer la comparaison avec R en premier
         if dir == b'R' {
             position = (position + rot).rem_euclid(100);
         } else {
@@ -75,7 +79,7 @@ pub fn d1p1_v4(s: &str) -> usize {
         let rot = rotation[1..].parse::<i32>().unwrap_or(0);
 
         if dir == b'L' {
-            position = (position - rot + 100) % 100;
+            position = (position - rot + 100) % 100; //force résultat +
         } else {
             position = (position + rot) % 100;
         }

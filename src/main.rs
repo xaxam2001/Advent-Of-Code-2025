@@ -16,7 +16,7 @@ fn main() {
     println!("-------------\n");
     println!("--- Day 2 ---");
     println!("Résultat Partie 1 : {}", d2p1(include_str!("d2/d2.txt")));
-    println!("Résultat Partie 2 : {}", d2p2(include_str!("d2/d2.txt")));
+    //println!("Résultat Partie 2 : {}", d2p2(include_str!("d2/d2.txt")));
     println!("-------------\n");
     println!("--- Day 3 --- ");
     println!("Résultat Partie 1 : {}", d3p1(include_str!("d3/d3.txt")));
@@ -28,7 +28,7 @@ fn main() {
     println!("-------------\n");
     println!("--- Day 5 --- ");
     println!("Résultat Partie 1 : {}", d5p1(include_str!("d5/d5.txt")));
-    println!("Résultat Partie 2 : {}", d5p2(include_str!("d5/d5.txt")));
+    //println!("Résultat Partie 2 : {}", d5p2(include_str!("d5/d5.txt")));
     println!("-------------\n");
     println!("--- Day 6 ---");
     println!("-------------\n");
