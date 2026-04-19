@@ -3,17 +3,17 @@ use std::time::Duration;
 pub fn d5p1_v1(s: &str) -> usize {
     let mut total = 0;
 
-    let s_normalized = s.replace("\r\n", "\n");
-    let sample: Vec<&str> = s_normalized.split("\n\n").collect();
+    let s_normalized = s.replace("\r\n", "\n"); //*
+    let sample: Vec<&str> = s_normalized.split("\n\n").collect(); //*
     // separation interval / ingrédient
-    let sample_a:Vec<&str> = sample[0].split_whitespace().collect();
-    let sample_b:Vec<&str> = sample[1].split_whitespace().collect();
+    let sample_a:Vec<&str> = sample[0].split_whitespace().collect(); //*
+    let sample_b:Vec<&str> = sample[1].split_whitespace().collect(); //*
 
     let mut ids_available:Vec<u64> = Vec::new();
     // extraction et stockage initial des ids
     for sample in sample_b
     {
-        let ids_str:Vec<&str> = sample.split(',').collect();
+        let ids_str:Vec<&str> = sample.split(',').collect(); //*
 
         for id in ids_str
         {
@@ -32,7 +32,7 @@ pub fn d5p1_v1(s: &str) -> usize {
         for sample in &sample_a
         {
             //allocation et découpage répétés dans la boucle
-            let range:Vec<&str> = sample.split('-').collect(); //allocation + découpage
+            let range:Vec<&str> = sample.split('-').collect(); //allocation + découpage **
             let min = range[0].parse::<usize>().unwrap();  //conversion
             let max = range[1].parse::<usize>().unwrap();
 
@@ -56,7 +56,7 @@ pub fn d5p1_v2(s: &str) -> usize {
     let mut total = 0;
 
     // séparation bloc règles / bloc produits
-    let s_normalized = s.replace("\r\n", "\n");
+    let s_normalized = s.replace("\r\n", "\n"); //*
     let sample: Vec<&str> = s_normalized.split("\n\n").collect();
     let sample_a = sample[0];
     let sample_b = sample[1];
@@ -65,7 +65,7 @@ pub fn d5p1_v2(s: &str) -> usize {
     // préparation des plages d'ids
     for sample in sample_a.split_whitespace()
     {
-        let bornes: Vec<&str> = sample.split('-').collect();
+        let bornes: Vec<&str> = sample.split('-').collect(); //*
         let min = bornes[0].parse::<u64>().unwrap();
         let max = bornes[1].parse::<u64>().unwrap();
 
@@ -79,7 +79,7 @@ pub fn d5p1_v2(s: &str) -> usize {
         {
             let id = id_str.parse::<u64>().unwrap(); // conversion ID en numérique
 
-            // test de l'ID contre chaque règle préparée
+            // test de l'ID contre chaque règle préparée //++
             for (min, max) in &ids_available //ids déja prêt => comparaison binaire
             {
                 if id >= *min && id <= *max

@@ -4,17 +4,17 @@ pub fn d2p1_v1(s: &str) -> usize {
     //std::thread::sleep(Duration::from_millis(40));
 
     let mut result = 0;
-    let product_ids:Vec<&str> = s.split(',').collect();
+    let product_ids:Vec<&str> = s.split(',').collect(); //*
 
     for product_id in &product_ids
     {
-        let ids:Vec<&str> = product_id.split('-').collect();
+        let ids:Vec<&str> = product_id.split('-').collect(); //*
         let a = ids[0].parse::<usize>().unwrap();
         let b = ids[1].parse::<usize>().unwrap();
 
         for range in a..=b
         {
-            let id_str = &range.to_string(); // allocation new string heap
+            let id_str = &range.to_string(); // allocation new string heap *
             let length = id_str.len();
 
             if !length % 2 == 0 {
@@ -24,7 +24,7 @@ pub fn d2p1_v1(s: &str) -> usize {
             {
                 let middle = length / 2; // middle index
                 // découpage de chaîne
-                let a = &id_str[..middle];
+                let a = &id_str[..middle]; //*
                 let b = &id_str[middle..length];
 
                 //comparaison de caractère
@@ -43,7 +43,7 @@ pub fn d2p1_v2(s: &str) -> usize {
 
     for product_id in s.split(',')
     {
-        let ids:Vec<&str> = product_id.split('-').collect();
+        let ids:Vec<&str> = product_id.split('-').collect(); //*
         let a = ids[0].parse::<usize>().unwrap();
         let b = ids[1].parse::<usize>().unwrap();
 
@@ -188,7 +188,7 @@ pub fn d2p1_v5(s: &str) -> usize {
 
     for product_id in s.as_bytes().split(|&b| b == b',')
     {
-        let ids:Vec<&[u8]> = product_id.split(|&b| b == b'-').collect();
+        let ids:Vec<&[u8]> = product_id.split(|&b| b == b'-').collect(); //*
 
         let mut a = 0;
         for &chiffre in ids[0]
