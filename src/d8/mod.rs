@@ -1,5 +1,7 @@
+use std::collections::BinaryHeap;
+
 pub fn d8p1(s: &str, n_shortest_connection: usize) -> usize {
-    d8p1_v3(s, n_shortest_connection)
+    d8p1_v7(s, n_shortest_connection)
 }
 
 // Helper function to find the root of a network
@@ -79,129 +81,470 @@ pub fn d8p1_v1(s: &str, n_shortest_connection: usize) -> usize {
     size.iter().take(3).product()
 }
 
-#[allow(unused)]
-pub fn d8p1_v2(s: &str, n_shortest_connection: usize) -> usize {
+    #[allow(unused)]
+    pub fn d8p1_v2(s: &str, n_shortest_connection: usize) -> usize {
 
-    // create the points ahead to avoid parsing twice the same values
-    let points: Vec<[i32; 3]> = s
-        .lines()
-        .map(|line| {
+        // create the points ahead to avoid parsing twice the same values
+        let points: Vec<[i32; 3]> = s
+            .lines()
+            .map(|line| {
+                let mut parts = line.split(',');
+                [
+                    parts.next().unwrap().parse().unwrap(),
+                    parts.next().unwrap().parse().unwrap(),
+                    parts.next().unwrap().parse().unwrap(),
+                ]
+            })
+            .collect();
+
+        let n = points.len(); // get the number of points
+
+        // This vec contains (distance_squared, index1, index2)
+        let mut distances: Vec<(f64, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+
+        // loop over all the lines (the O(n2) part)
+        for i in 0..n {
+            for j in (i + 1)..n {
+                let p1 = points[i];
+                let p2 = points[j];
+
+                // Compute the distances
+                let dx = f64::from(p1[0] - p2[0]);
+                let dy = f64::from(p1[1] - p2[1]);
+                let dz = f64::from(p1[2] - p2[2]);
+                let dist = (dx * dx + dy * dy + dz * dz).sqrt();
+
+                // Add into a vec associating indices and distance
+                distances.push((dist, i, j));
+            }
+        }
+
+        // sort the distance from smallest to biggest
+        // sort_unstable here because we don't care about the ties
+        // for floats had to use total_cmp which move NaN at the end
+        distances.sort_unstable_by(|a, b| a.0.total_cmp(&b.0));
+
+
+        // network representation
+        // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
+        let mut parent: Vec<usize> = (0..n).collect(); // at first each one is it's own parent
+        let mut size: Vec<usize> = vec![1; n];
+
+
+        // Process only the top 1000 shortest connections
+        for &(_, i, j) in distances.iter().take(n_shortest_connection) {
+            let root_i = find(i, &mut parent);
+            let root_j = find(j, &mut parent);
+
+            // If they aren't already in the same network we merge then
+            if root_i != root_j {
+                parent[root_j] = root_i;       // connect j's network to i's network
+                size[root_i] += size[root_j];  // add their sizes together
+                size[root_j] = 0;              // old root is zero now so we don't double count it
+            }
+        }
+
+        // Multiply the size of the 3 largest networks together
+        // Sort sizes in descending order
+        size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable
+
+        // Take the top 3 and multiply them
+        size.iter().take(3).product()
+    }
+
+    #[allow(unused)]
+    pub fn d8p1_v3(s: &str, n_shortest_connection: usize) -> usize {
+
+        // create the points ahead to avoid parsing twice the same values
+        // BOTTLENECK 1 : parse str + heap
+        let points: Vec<[i64; 3]> = s
+            .lines()
+            .map(|line| {
+                let mut parts = line.split(',');
+                [
+                    parts.next().unwrap().parse().unwrap(),
+                    parts.next().unwrap().parse().unwrap(),
+                    parts.next().unwrap().parse().unwrap(),
+                ]
+            })
+            .collect();
+
+        let n = points.len(); // get the number of points
+
+        // This vec contains (distance_squared, index1, index2)
+        // BOTTLENECK 2 : heap alloc
+        // in d8.txt 1000 points. 1000 choose 2 =  499500 dist on f64 + usize (64) x2 = ~12MB overflow
+        let mut distances: Vec<(i64, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+
+        // loop over all the lines (the O(n2) part)
+        for i in 0..n {
+            for j in (i + 1)..n {
+                let p1 = points[i];
+                let p2 = points[j];
+
+                // Compute the distances
+                let dx = p1[0] - p2[0];
+                let dy = p1[1] - p2[1];
+                let dz = p1[2] - p2[2];
+                let dist = dx * dx + dy * dy + dz * dz;
+
+                // Add into a vec associating indices and distance
+                distances.push((dist, i, j));
+            }
+        }
+
+        // can use just sort_unstable here because working with int so no NaN
+        distances.sort_unstable();
+
+        // network representation
+        // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
+        let mut parent: Vec<usize> = (0..n).collect(); // at first each one is its own parent
+        let mut size: Vec<usize> = vec![1; n];
+
+
+        // Process only the top 1000 shortest connections
+        for &(_, i, j) in distances.iter().take(n_shortest_connection) {
+            let root_i = find(i, &mut parent);
+            let root_j = find(j, &mut parent);
+
+            // If they aren't already in the same network we merge then
+            if root_i != root_j {
+                parent[root_j] = root_i;       // connect j's network to i's network
+                size[root_i] += size[root_j];  // add their sizes together
+                size[root_j] = 0;              // old root is zero now so we don't double count it
+            }
+        }
+
+        // Multiply the size of the 3 largest networks together
+        // Sort sizes in descending order
+        size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable
+
+        // Take the top 3 and multiply them
+        size.iter().take(3).product()
+    }
+
+    #[allow(unused)]
+    pub fn d8p1_v4(s: &str, n_shortest_connection: usize) -> usize {
+
+        let mut lines = s.lines(); // has to be placed in a mutable iterator first otherwise doesn't work
+
+        let mut n = 0; // manually count the number of lines (necessary for the test input that is <1000)
+
+        // create the points ahead to avoid parsing twice the same values
+        // 1000 is hard coded because there 1000 points in d8.txt
+        let points: [[i64; 3]; 1000] = std::array::from_fn(|_| {
+            // since there is a fixed buffer size, if we get to the end of the file pad with maximum i32
+            let Some(line) = lines.next() else {
+                return [i64::MAX; 3];
+            };
+
+            n+=1;
+
             let mut parts = line.split(',');
+
             [
                 parts.next().unwrap().parse().unwrap(),
                 parts.next().unwrap().parse().unwrap(),
                 parts.next().unwrap().parse().unwrap(),
             ]
-        })
-        .collect();
+        });
 
-    let n = points.len(); // get the number of points
+            // This vec contains (distance_squared, index1, index2)
+            // in d8.txt 1000 points. 1000 choose 2 =  499500 dist on f64 + usize (64) x2 = ~12MB overflow
+            let mut distances: Vec<(i64, usize, usize)> = Vec::with_capacity(499500);
 
-    // This vec contains (distance_squared, index1, index2)
-    let mut distances: Vec<(f64, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+        // loop over all the lines (the O(n2) part)
+        for i in 0..n {
+            for j in (i + 1)..n {
+                let p1 = points[i];
+                let p2 = points[j];
 
-    // loop over all the lines (the O(n2) part)
-    for i in 0..n {
-        for j in (i + 1)..n {
-            let p1 = points[i];
-            let p2 = points[j];
+                // Compute the distances
+                let dx = p1[0] - p2[0];
+                let dy = p1[1] - p2[1];
+                let dz = p1[2] - p2[2];
+                let dist = dx * dx + dy * dy + dz * dz;
 
-            // Compute the distances
-            let dx = f64::from(p1[0] - p2[0]);
-            let dy = f64::from(p1[1] - p2[1]);
-            let dz = f64::from(p1[2] - p2[2]);
-            let dist = (dx * dx + dy * dy + dz * dz).sqrt();
-
-            // Add into a vec associating indices and distance
-            distances.push((dist, i, j));
+                // Add into the list associating indices and distance
+                distances.push((dist, i, j));
+            }
         }
+
+        // can use just sort_unstable here because working with int so no NaN
+        distances.sort_unstable();
+
+        // network representation
+        // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
+        let mut parent: [usize; 1000] = std::array::from_fn(|i| i);
+        let mut size: [usize; 1000] = [1; 1000];
+
+
+        // Process only the top 1000 shortest connections
+        for &(_, i, j) in distances.iter().take(n_shortest_connection) {
+            let root_i = find(i, &mut parent);
+            let root_j = find(j, &mut parent);
+
+            // If they aren't already in the same network we merge then
+            if root_i != root_j {
+                parent[root_j] = root_i;       // connect j's network to i's network
+                size[root_i] += size[root_j];  // add their sizes together
+                size[root_j] = 0;              // old root is zero now so we don't double count it
+            }
+        }
+
+        // Multiply the size of the 3 largest networks together
+        // Sort sizes in descending order
+        size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable
+
+        // Take the top 3 and multiply them
+        size.iter().take(3).product()
     }
 
-    // sort the distance from smallest to biggest
-    // sort_unstable here because we don't care about the ties
-    // for floats had to use total_cmp which move NaN at the end
-    distances.sort_unstable_by(|a, b| a.0.total_cmp(&b.0));
+    #[allow(unused)]
+    pub fn d8p1_v5(s: &str, n_shortest_connection: usize) -> usize {
 
+        let mut lines = s.as_bytes().split(|&b| b == b'\n'); // has to be placed in a mutable iterator first otherwise doesn't work
 
-    // network representation
-    // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
-    let mut parent: Vec<usize> = (0..n).collect(); // at first each one is it's own parent
-    let mut size: Vec<usize> = vec![1; n];
+        let mut n = 0; // manually count the number of lines (necessary for the test input that is <1000)
 
+        // create the points ahead to avoid parsing twice the same values
+        // 1000 is hard coded because there 1000 points in d8.txt
+        let points: [[i64; 3]; 1000] = std::array::from_fn(|_| {
 
-    // Process only the top 1000 shortest connections
-    for &(_, i, j) in distances.iter().take(n_shortest_connection) {
-        let root_i = find(i, &mut parent);
-        let root_j = find(j, &mut parent);
+            // since there is a fixed buffer size, if we get to the end of the file pad with maximum i32
+            let Some(line) = lines.next() else {
+                return [i64::MAX; 3];
+            };
 
-        // If they aren't already in the same network we merge then
-        if root_i != root_j {
-            parent[root_j] = root_i;       // connect j's network to i's network
-            size[root_i] += size[root_j];  // add their sizes together
-            size[root_j] = 0;              // old root is zero now so we don't double count it
+            n += 1;
+
+            let mut parts = line.split(|&b| b == b',');
+
+            let mut point: [i64; 3] = [0; 3];
+
+            for i in 0..3 {
+                let number_u8 = parts.next().unwrap();
+
+                point[i] = 0;
+                for &digit in  number_u8 {
+                    point[i] = point[i] * 10 + i64::from(digit - b'0');
+                };
+
+            }
+
+            point
+        });
+
+        // This vec contains (distance_squared, index1, index2)
+        // in d8.txt 1000 points. 1000 choose 2 =  499500 dist on f64 + usize (64) x2 = ~12MB overflow
+        let mut distances: Vec<(i64, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+
+        // loop over all the lines (the O(n2) part)
+        for i in 0..n {
+            for j in (i + 1)..n {
+                let p1 = points[i];
+                let p2 = points[j];
+
+                // Compute the distances
+                let dx = p1[0] - p2[0];
+                let dy = p1[1] - p2[1];
+                let dz = p1[2] - p2[2];
+                let dist = (dx * dx + dy * dy + dz * dz);
+
+                // Add into the list associating indices and distance
+                distances.push((dist, i, j));
+            }
         }
+
+        // can use just sort_unstable here because working with int so no NaN
+        distances.sort_unstable();
+
+        // network representation
+        // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
+        let mut parent: [usize; 1000] = std::array::from_fn(|i| i);
+        let mut size: [usize; 1000] = [1; 1000];
+
+
+        // Process only the top 1000 shortest connections
+        for &(_, i, j) in distances.iter().take(n_shortest_connection) {
+            let root_i = find(i, &mut parent);
+            let root_j = find(j, &mut parent);
+
+            // If they aren't already in the same network we merge then
+            if root_i != root_j {
+                parent[root_j] = root_i;       // connect j's network to i's network
+                size[root_i] += size[root_j];  // add their sizes together
+                size[root_j] = 0;              // old root is zero now so we don't double count it
+            }
+        }
+
+        // Multiply the size of the 3 largest networks together
+        // Sort sizes in descending order
+        size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable
+
+        // Take the top 3 and multiply them
+        size.iter().take(3).product()
     }
 
-    // Multiply the size of the 3 largest networks together
-    // Sort sizes in descending order
-    size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable
+    #[allow(unused)]
+    pub fn d8p1_v6(s: &str, n_shortest_connection: usize) -> usize {
 
-    // Take the top 3 and multiply them
-    size.iter().take(3).product()
-}
+        let mut lines = s.as_bytes().split(|&b| b == b'\n'); // has to be placed in a mutable iterator first otherwise doesn't work
 
-#[allow(unused)]
-pub fn d8p1_v3(s: &str, n_shortest_connection: usize) -> usize {
+        let mut n = 0; // manually count the number of lines (necessary for the test input that is <1000)
 
-    // create the points ahead to avoid parsing twice the same values
-    // BOTTLENECK 1 : parse str + heap
-    let points: Vec<[i32; 3]> = s
-        .lines()
-        .map(|line| {
-            let mut parts = line.split(',');
-            [
-                parts.next().unwrap().parse().unwrap(),
-                parts.next().unwrap().parse().unwrap(),
-                parts.next().unwrap().parse().unwrap(),
-            ]
-        })
-        .collect();
+        // create the points ahead to avoid parsing twice the same values
+        // 1000 is hard coded because there 1000 points in d8.txt
+        let points: [[i64; 3]; 1000] = std::array::from_fn(|_| {
 
-    let n = points.len(); // get the number of points
+            // since there is a fixed buffer size, if we get to the end of the file pad with maximum i64
+            let Some(line) = lines.next() else {
+                return [i64::MAX; 3];
+            };
 
-    // This vec contains (distance_squared, index1, index2)
-    // BOTTLENECK 2 : heap alloc
-    // cache L3 CPU 24MB, in d8.txt 1000 points. 1000 choose 2 =  499500 dist on i32 = ~2MB should be storable on cache CPU 
-    let mut distances: Vec<(i32, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+            n += 1;
 
-    // loop over all the lines (the O(n2) part)
-    for i in 0..n {
-        for j in (i + 1)..n {
-            let p1 = points[i];
-            let p2 = points[j];
+            let mut parts = line.split(|&b| b == b',');
+
+            let mut point: [i64; 3] = [0; 3];
+
+            for i in 0..3 {
+                let number_u8 = parts.next().unwrap();
+
+                point[i] = 0;
+                for &digit in  number_u8 {
+                    point[i] = point[i] * 10 + i64::from(digit - b'0');
+                };
+            }
+
+            point
+        });
+
+        // This vec contains (distance_squared, index1, index2)
+        // in d8.txt 1000 points. 1000 choose 2 =  499500 dist on f64 + usize (64) x2 = ~12MB overflow
+        let mut distances: Vec<(i64, usize, usize)> = Vec::with_capacity(n * (n - 1) / 2);
+
+        // loop over all the lines (the O(n2) part)
+        for i in 0..n {
+            for j in (i + 1)..n {
+                let p1 = points[i];
+                let p2 = points[j];
+
+                // Compute the distances
+                let dx = p1[0] - p2[0];
+                let dy = p1[1] - p2[1];
+                let dz = p1[2] - p2[2];
+                let dist = (dx * dx + dy * dy + dz * dz);
+
+                // Add into the list associating indices and distance
+                distances.push((dist, i, j));
+            }
+        }
+
+        // sort only the 1000 biggest number instead of the 500k
+        let (top_1000, _, _) = distances.select_nth_unstable(n_shortest_connection);
+        top_1000.sort_unstable();
+
+        // network representation
+        // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
+        let mut parent: [usize; 1000] = std::array::from_fn(|i| i);
+        let mut size: [usize; 1000] = [1; 1000];
+
+
+        // Process only the top 1000 shortest connections
+        for &(_, i, j) in top_1000.iter() {
+            let root_i = find(i, &mut parent);
+            let root_j = find(j, &mut parent);
+
+            // If they aren't already in the same network we merge then
+            if root_i != root_j {
+                parent[root_j] = root_i;       // connect j's network to i's network
+                size[root_i] += size[root_j];  // add their sizes together
+                size[root_j] = 0;              // old root is zero now so we don't double count it
+            }
+        }
+
+        // Multiply the size of the 3 largest networks together
+        // Sort sizes in descending order
+        size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable
+
+        // Take the top 3 and multiply them
+        size.iter().take(3).product()
+    }
+
+    #[allow(unused)]
+    pub fn d8p1_v7(s: &str, n_shortest_connection: usize) -> usize {
+
+        let mut lines = s.as_bytes().split(|&b| b == b'\n'); // has to be placed in a mutable iterator first otherwise doesn't work
+
+        let mut n = 0; // manually count the number of lines (necessary for the test input that is <1000)
+
+        // create the points ahead to avoid parsing twice the same values
+        // 1000 is hard coded because there 1000 points in d8.txt
+        let points: [[i64; 3]; 1000] = std::array::from_fn(|_| {
+
+            // since there is a fixed buffer size, if we get to the end of the file pad with maximum i32
+            let Some(line) = lines.next() else {
+                return [i64::MAX; 3];
+            };
+
+            n += 1;
+
+            let mut parts = line.split(|&b| b == b',');
+
+            let mut point: [i64; 3] = [0; 3];
+
+            for i in 0..3 {
+                let number_u8 = parts.next().unwrap();
+
+                point[i] = 0;
+                for &digit in  number_u8 {
+                    point[i] = point[i] * 10 + i64::from(digit - b'0');
+                };
+
+            }
+
+            point
+        });
+
+        // use a binary heap to only keep the 1000 values, already sorted. BinaryHeap keeps the smallest value in
+        let mut distances: BinaryHeap<(i64, usize, usize)> = BinaryHeap::with_capacity(n_shortest_connection);
+
+        // loop over all the lines (the O(n2) part)
+        for i in 0..n {
+            for j in (i + 1)..n {
+                let p1 = points[i];
+                let p2 = points[j];
 
             // Compute the distances
             let dx = p1[0] - p2[0];
             let dy = p1[1] - p2[1];
             let dz = p1[2] - p2[2];
-            let dist = dx * dx + dy * dy + dz * dz;
-
-            // Add into a vec associating indices and distance
-            distances.push((dist, i, j));
+            let dist = (dx * dx + dy * dy + dz * dz);
+            
+            if distances.len() < n_shortest_connection {
+                // If the heap isn't full yet add the distance
+                distances.push((dist, i, j));
+            } else if dist < distances.peek().unwrap().0 {
+                // If the heap is full remove the top of the heap (which is the bigger value
+                distances.pop();
+                // add the new one
+                distances.push((dist, i, j));
+            }
         }
     }
 
     // can use just sort_unstable here because working with int so no NaN
-    distances.sort_unstable();
+    let distances_vec = distances.into_sorted_vec();
 
     // network representation
     // 'parent' tracks who connect to who and 'size' tracks sizes of each networks
-    let mut parent: Vec<usize> = (0..n).collect(); // at first each one is its own parent
-    let mut size: Vec<usize> = vec![1; n];
+    let mut parent: [usize; 1000] = std::array::from_fn(|i| i);
+    let mut size: [usize; 1000] = [1; 1000];
 
 
     // Process only the top 1000 shortest connections
-    for &(_, i, j) in distances.iter().take(n_shortest_connection) {
+    for &(_, i, j) in distances_vec.iter() {
         let root_i = find(i, &mut parent);
         let root_j = find(j, &mut parent);
 
@@ -212,7 +555,6 @@ pub fn d8p1_v3(s: &str, n_shortest_connection: usize) -> usize {
             size[root_j] = 0;              // old root is zero now so we don't double count it
         }
     }
-
     // Multiply the size of the 3 largest networks together
     // Sort sizes in descending order
     size.sort_unstable_by(|a, b| b.cmp(a)); // found in the doc of sort_unstable

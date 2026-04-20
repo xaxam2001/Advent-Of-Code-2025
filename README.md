@@ -72,6 +72,14 @@ using u8 list instead of str
 ### v4
 getting rid of the double loop, refined logic
 
+### v5
+try to work with u8 (slower bc conversion to usize mandatory and done twice in the loop instead of once)
+
+### v6 (slower)
+tried to get rid of the split method, got things worth because split is highly optimized and bases on memchr which uses
+SMID (Single Instruction, Multiple Data)
+
+
 ## d8p1
 
 ### v2

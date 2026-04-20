@@ -89,33 +89,118 @@ pub fn d3p1_v4(s: &str) -> usize {
 
     for line in s.as_bytes().split(|&b| b == b'\n'){
 
-        let mut highest_joltage_first_digit = usize::from(line[0] - b'0');
-        let mut highest_joltage_second_digit = usize::from(line[1] - b'0');
+        let mut max_first_seen = usize::from(line[0] - b'0');
+        let mut highest_joltage = 0;
 
-        for (i, current_digit) in line.iter().skip(joltage_size).enumerate() {
+        for (i, current_digit) in line.iter().skip(1).enumerate() {
             let current_digit = usize::from(current_digit - b'0');
-            if current_digit > highest_joltage_second_digit
-            {
-                highest_joltage_second_digit = current_digit;
-            }
-            if current_digit > highest_joltage_first_digit
-                && i+joltage_size < line.len() - 1
-            {
-                highest_joltage_first_digit = current_digit;
-                highest_joltage_second_digit = usize::from(line[i+joltage_size+1] - b'0');
+
+            // we pair the current digit with the biggest number we've seen to its left
+            let potential_joltage = max_first_seen * 10 + current_digit;
+
+            if potential_joltage > highest_joltage {
+                highest_joltage = potential_joltage;
             }
 
+            // Check if the current digit is better than the past ones
+            if current_digit > max_first_seen {
+                max_first_seen = current_digit;
+            }
         }
         
-        total_joltage += highest_joltage_first_digit * 10 + highest_joltage_second_digit;
+        total_joltage += highest_joltage;
     }
 
     total_joltage
 }
 
+#[allow(unused)]
+pub fn d3p1_v5(s: &str) -> usize {
+    let mut total_joltage = 0;
+    let joltage_size = 2;
+
+    for line in s.as_bytes().split(|&b| b == b'\n'){
+
+        let mut max_first_seen = line[0] - b'0';
+        let mut highest_joltage = 0;
+
+        for (i, current_digit) in line.iter().skip(1).enumerate() {
+            let current_digit = current_digit - b'0';
+
+            // we pair the current digit with the biggest number we've seen to its left
+            let potential_joltage = usize::from(max_first_seen) * 10 + usize::from(current_digit);
+
+            if potential_joltage > highest_joltage {
+                highest_joltage = potential_joltage;
+            }
+
+            // Check if the current digit is better than the past ones
+            if current_digit > max_first_seen {
+                max_first_seen = current_digit;
+            }
+        }
+
+        total_joltage += highest_joltage;
+    }
+
+    total_joltage
+}
+
+#[allow(unused)]
+pub fn d3p1_v6(s: &str) -> usize {
+    let mut total_joltage = 0;
+    let joltage_size = 2;
+
+    let bytes = s.as_bytes(); // get the raw bytes directly
+
+    let mut max_first_seen = bytes[0] - b'0';
+    let mut highest_joltage = 0;
+
+    let mut new_line_index = 0;
+
+    for (i, &b) in bytes.iter().enumerate() {
+
+        if i == new_line_index {continue};
+
+        match b {
+            b'0'..=b'9' => {
+                let current_digit = b - b'0';
+                // we pair the current digit with the biggest number we've seen to its left
+                let potential_joltage = usize::from(max_first_seen) * 10 + usize::from(current_digit);
+
+                if potential_joltage > highest_joltage {
+                    highest_joltage = potential_joltage;
+                }
+
+                // Check if the current digit is better than the past ones
+                if current_digit > max_first_seen {
+                    max_first_seen = current_digit;
+                }
+            }
+            b'\n' => {
+                // if switching to next number add the value of the highest joltage
+                total_joltage += highest_joltage;
+
+                // reset the highest joltage digit using the next first one
+                max_first_seen = bytes[i+1] - b'0';
+                highest_joltage = 0;
+
+                // we set the new line index
+                new_line_index = i + 1;
+            }
+            _ => ()
+        }
+    }
+
+    // add final line calculation because file doesn't end with a \n
+    total_joltage += highest_joltage;
+    
+    total_joltage
+}
+
 
 pub fn d3p1(s: &str) -> usize {
-    d3p1_v4(s)
+    d3p1_v6(s)
 }
 
 pub fn d3p2_v1(s: &str) -> usize {
